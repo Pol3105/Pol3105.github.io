@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio - Pablo</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Simple styles for language switch */
+    #lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Language Switch -->
+  <button id="lang-switch">ES</button>
 
   <!-- Header -->
   <header>
     <div class="container">
-      <h1>Pablo Rejon Camacho</h1>
-      <p>Estudiante de Ingeniería Informática | IT & Desarrollo Web | Proyectos personales y experiencia profesional</p>
+      <h1 data-lang-en="Pablo Rejon Camacho" data-lang-es="Pablo Rejón Camacho">Pablo Rejon Camacho</h1>
+      <p data-lang-en="Computer Engineering Student | IT & Web Development | Personal Projects & Professional Experience"
+         data-lang-es="Estudiante de Ingeniería Informática | IT & Desarrollo Web | Proyectos personales y experiencia profesional">
+         Computer Engineering Student | IT & Web Development | Personal Projects & Professional Experience
+      </p>
       <div class="badges">
         <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
         <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
@@ -26,72 +45,60 @@
     </div>
   </header>
 
-  <!-- Sección Experiencia -->
+  <!-- Experience Section -->
   <section id="experience">
     <div class="container">
-      <h2>Qué hago</h2>
-      <p>
-        Actualmente estoy combinando varias facetas: mientras finalizo mis estudios en Ingeniería Informática y disfruto de mi experiencia Erasmus, estoy adquiriendo experiencia práctica trabajando en IT y desarrollo web. Además, aprovecho mi tiempo para emprender y desarrollar proyectos personales, explorando nuevas tecnologías y APIs.
+      <h2 data-lang-en="What I Do" data-lang-es="Qué hago">What I Do</h2>
+      <p data-lang-en="Currently, I am combining several facets: while finishing my Computer Engineering studies and enjoying my Erasmus experience, I am gaining practical experience in IT and web development. I also spend my time creating personal projects, exploring new technologies and APIs."
+         data-lang-es="Actualmente estoy combinando varias facetas: mientras finalizo mis estudios en Ingeniería Informática y disfruto de mi experiencia Erasmus, estoy adquiriendo experiencia práctica trabajando en IT y desarrollo web. Además, aprovecho mi tiempo para emprender y desarrollar proyectos personales, explorando nuevas tecnologías y APIs.">
+         Currently, I am combining several facets: while finishing my Computer Engineering studies...
       </p>
 
-      <!-- Experiencia profesional añadida -->
-      <h3>Experiencia Profesional</h3>
-      <p><strong>Soporte TIC – Empresa de Biotecnología (8 meses sigo actualmente)</strong></p>
+      <h3 data-lang-en="Professional Experience" data-lang-es="Experiencia Profesional">Professional Experience</h3>
+      <p data-lang-en="IT Support – Biotechnology Company (8 months, currently)" data-lang-es="Soporte TIC – Empresa de Biotecnología (8 meses sigo actualmente)">
+        IT Support – Biotechnology Company (8 months, currently)
+      </p>
       <ul>
-        <li>Gestión completa de sistemas e infraestructura informática.</li>
-        <li>Resolución de incidencias técnicas y soporte a usuarios.</li>
-        <li>Asignación de permisos y gestión de accesos.</li>
-        <li>Backups semanales y mantenimiento preventivo de sistemas.</li>
-        <li>Participación en proyectos internos de mejora de procesos TIC.</li>
+        <li data-lang-en="Full management of IT systems and infrastructure" data-lang-es="Gestión completa de sistemas e infraestructura informática">Full management of IT systems and infrastructure</li>
+        <li data-lang-en="Technical incident resolution and user support" data-lang-es="Resolución de incidencias técnicas y soporte a usuarios">Technical incident resolution and user support</li>
+        <li data-lang-en="Permission assignment and access management" data-lang-es="Asignación de permisos y gestión de accesos">Permission assignment and access management</li>
+        <li data-lang-en="Weekly backups and preventive system maintenance" data-lang-es="Backups semanales y mantenimiento preventivo de sistemas">Weekly backups and preventive system maintenance</li>
+        <li data-lang-en="Participation in internal IT process improvement projects" data-lang-es="Participación en proyectos internos de mejora de procesos TIC">Participation in internal IT process improvement projects</li>
       </ul>
 
-      <!-- Objetivos y aprendizaje añadidos -->
-      <h3>Objetivos & Aprendizaje</h3>
+      <h3 data-lang-en="Goals & Learning" data-lang-es="Objetivos & Aprendizaje">Goals & Learning</h3>
       <ul>
-        <li>Alcanzar nivel C1 de inglés.</li>
-        <li>Aprender TypeScript y buenas prácticas de desarrollo web.</li>
-        <li>Explorar distintas áreas de la informática para descubrir mi especialización.</li>
-        <li>Colaborar en proyectos open-source y desarrollar proyectos propios.</li>
+        <li data-lang-en="Reach C1 English level" data-lang-es="Alcanzar nivel C1 de inglés">Reach C1 English level</li>
+        <li data-lang-en="Learn TypeScript and good web development practices" data-lang-es="Aprender TypeScript y buenas prácticas de desarrollo web">Learn TypeScript and good web development practices</li>
+        <li data-lang-en="Explore different IT fields to find my specialization" data-lang-es="Explorar distintas áreas de la informática para descubrir mi especialización">Explore different IT fields to find my specialization</li>
+        <li data-lang-en="Collaborate in open-source projects and develop personal projects" data-lang-es="Colaborar en proyectos open-source y desarrollar proyectos propios">Collaborate in open-source projects and develop personal projects</li>
       </ul>
     </div>
   </section>
 
-  <!-- Sección Proyectos -->
+  <!-- Projects Section -->
   <section id="projects">
     <div class="container">
-      <h2>Proyectos Destacados</h2>
+      <h2 data-lang-en="Highlighted Projects" data-lang-es="Proyectos Destacados">Highlighted Projects</h2>
       <div class="project-grid">
-
         <div class="project-card">
-          <h3>Proyectos universitarios</h3>
-          <p>Repositorio que agrupa mis proyectos académicos, limpios y documentados, mostrando habilidades en PHP, MySQL, APIs y desarrollo web.</p>
-          <a href="https://github.com/Pol3105/universidad/blob/main/README.md" target="_blank">Ver proyecto</a>
+          <h3 data-lang-en="University Projects" data-lang-es="Proyectos universitarios">University Projects</h3>
+          <p data-lang-en="Repository of my academic projects, clean and documented, showing skills in PHP, MySQL, APIs, and web development."
+             data-lang-es="Repositorio que agrupa mis proyectos académicos, limpios y documentados, mostrando habilidades en PHP, MySQL, APIs y desarrollo web.">
+             Repository of my academic projects, clean and documented...
+          </p>
+          <a href="https://github.com/Pol3105/universidad/blob/main/README.md" target="_blank" data-lang-en="View Project" data-lang-es="Ver proyecto">View Project</a>
         </div>
-
-        <!-- Sección Proyectos 
-
-        <div class="project-card">
-          <h3>Proyecto web para cliente</h3>
-          <p>Página web real enfocada en UX/UI y funcionalidad, desarrollada para un cliente mientras adquiría experiencia profesional.</p>
-          <a href="https://github.com/tuusuario/proyecto-personal1" target="_blank">Ver proyecto</a>
-        </div>
-
-        <div class="project-card">
-          <h3>Proyecto personal experimental</h3>
-          <p>Proyecto personal explorando nuevas tecnologías, APIs y herramientas como Google Calendar API y Web Scraping, mientras estudio y trabajo.</p>
-          <a href="https://github.com/tuusuario/proyecto-personal2" target="_blank">Ver proyecto</a>
-        </div>
-        -->
       </div>
     </div>
   </section>
 
-  <!-- Sección Contacto -->
+  <!-- Contact Section -->
   <section id="contact">
     <div class="container">
-      <h2>Contacto</h2>
+      <h2 data-lang-en="Contact" data-lang-es="Contacto">Contact</h2>
       <ul>
-        <li><a href="mailto:pablorejoncamacho@gmail.com">Correo electrónico</a></li>
+        <li><a href="mailto:pablorejoncamacho@gmail.com" data-lang-en="Email" data-lang-es="Correo electrónico">Email</a></li>
         <li><a href="https://github.com/Pol3105" target="_blank">GitHub</a></li>
         <li><a href="https://www.linkedin.com/in/pablorejoncamacho" target="_blank">LinkedIn</a></li>
       </ul>
@@ -101,9 +108,36 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>© 2025 Pablo Rejon Camacho. Todos los derechos reservados.</p>
+      <p>© 2025 Pablo Rejon Camacho. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    // Language switch functionality
+    const switchBtn = document.getElementById('lang-switch');
+    let currentLang = 'en'; // default language
+
+    switchBtn.addEventListener('click', () => {
+      const elements = document.querySelectorAll('[data-lang-en]');
+      if (currentLang === 'en') {
+        elements.forEach(el => el.textContent = el.getAttribute('data-lang-es'));
+        switchBtn.textContent = 'EN';
+        currentLang = 'es';
+      } else {
+        elements.forEach(el => el.textContent = el.getAttribute('data-lang-en'));
+        switchBtn.textContent = 'ES';
+        currentLang = 'en';
+      }
+    });
+
+    // On load, ensure default language is English
+    window.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('[data-lang-en]');
+      elements.forEach(el => el.textContent = el.getAttribute('data-lang-en'));
+      switchBtn.textContent = 'ES';
+      currentLang = 'en';
+    });
+  </script>
 
 </body>
 </html>
