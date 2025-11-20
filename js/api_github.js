@@ -1,6 +1,16 @@
 const username = 'pol3105';
 const url = `https://api.github.com/users/${username}/repos?sort=updated`;
 
+// --- DICCIONARIO DE TRADUCCIONES ---
+// Aquí escribimos manualmente la descripción en español para cada proyecto.
+// La clave (izquierda) debe ser EL NOMBRE EXACTO del repositorio.
+const traducciones = {
+    'Data-Insight-Lab': 'Dashboard Financiero Interactivo construido con Python. Consume datos en tiempo real, realiza limpieza con Pandas y renderiza gráficos dinámicos.',
+    'university': 'Agrupación de todos mis proyectos universitarios. Código documentado mostrando habilidades en PHP, MySQL, APIs y desarrollo web.',
+    'Pol3105.github.io': 'Código fuente de mi portfolio personal. Web estática alojada en GitHub Pages usando HTML, CSS y JavaScript vainilla.',
+    // Si añades otro repo importante en el futuro, añade su traducción aquí
+};
+
 async function cargarRepositorios() {
     try {
         const respuesta = await fetch(url);
@@ -14,28 +24,28 @@ async function cargarRepositorios() {
         // 2. FILTRADO
         const reposFiltrados = datosBrutos.filter(repo => !reposOcultos.includes(repo.name));
         
-        // 3. RENDERIZADO
         const contenedor = document.getElementById('proyectos-container');
-        
-        if (!contenedor) {
-            return;
-        }
+        if (!contenedor) return;
 
         contenedor.innerHTML = ''; 
 
         reposFiltrados.forEach(repo => {
             
-            // --- LÓGICA DE ESTILOS Y DATOS ---
+            // Estilos
             const lenguaje = repo.language || 'Code';
             const lenguajeColor = encodeURIComponent(lenguaje);
             const badgeUrl = `https://img.shields.io/badge/${lenguajeColor}-222?style=flat&logo=${lenguaje.toLowerCase()}&logoColor=white`;
-            const descripcion = repo.description || "Project without description";
 
-            // --- LÓGICA DE URLS (La parte nueva) ---
-            const urlEn = repo.html_url; // URL base (lleva al README.md por defecto)
-            
-            // Construimos la URL en español asumiendo que la rama es 'main'
-            // Si alguno de tus repos usa 'master', avísame para ajustarlo.
+            // --- LÓGICA DE TEXTOS ---
+            // 1. Descripción en Inglés (Viene directa de GitHub)
+            const descEN = repo.description || "Project without description";
+
+            // 2. Descripción en Español (La buscamos en nuestro diccionario)
+            // Si no existe en el diccionario, usamos la de inglés como plan B
+            const descES = traducciones[repo.name] || descEN;
+
+            // --- LÓGICA DE URLS ---
+            const urlEn = repo.html_url; 
             const urlEs = `${repo.html_url}/blob/main/README_ES.md`;
 
             // --- PLANTILLA HTML ---
@@ -50,10 +60,9 @@ async function cargarRepositorios() {
                     <img src="https://img.shields.io/badge/Stars-${repo.stargazers_count}-yellow?style=flat&logo=github" alt="Stars">
                   </div>
 
-                  <p data-lang-en="${descripcion}"
-                     data-lang-es="${descripcion}">
-                     ${descripcion}
-                  </p>
+                  <p data-lang-en="${descEN}"
+                     data-lang-es="${descES}">
+                     ${descEN} </p>
                   
                   <a href="${urlEn}"
                      target="_blank"
@@ -70,9 +79,7 @@ async function cargarRepositorios() {
             contenedor.innerHTML += tarjeta;
         });
 
-        // --- PASO EXTRA: SINCRONIZACIÓN ---
-        // Si el usuario ya había pulsado "ES" antes de que cargaran los repos,
-        // forzamos una comprobación rápida para actualizar los links recién creados.
+        // Sincronización final por si el usuario ya tiene la web en español
         verificarIdiomaActual();
 
     } catch (error) {
@@ -80,17 +87,24 @@ async function cargarRepositorios() {
     }
 }
 
-// Pequeña función auxiliar para sincronizar con tu botón de idioma
 function verificarIdiomaActual() {
     const botonIdioma = document.getElementById('lang-switch');
-    // Si el botón dice "EN", significa que estamos viendo la web en ESPAÑOL (porque el botón ofrece cambiar a inglés)
-    // O si tienes una variable global 'currentLang', úsala.
+    // Si el botón ofrece cambiar a 'EN', es que estamos en 'ES'
     if (botonIdioma && botonIdioma.textContent.includes('EN')) {
-        const nuevosLinks = document.querySelectorAll('.repo-link');
-        nuevosLinks.forEach(link => {
-            if(link.hasAttribute('data-link-es')) {
-                link.href = link.getAttribute('data-link-es');
-                link.textContent = link.getAttribute('data-lang-es');
+        
+        // Actualizamos links y textos de las nuevas tarjetas
+        const tarjetas = document.querySelectorAll('#proyectos-container .project-card');
+        
+        tarjetas.forEach(card => {
+            // Actualizar descripción (párrafo)
+            const p = card.querySelector('p');
+            if(p) p.textContent = p.getAttribute('data-lang-es');
+
+            // Actualizar enlace
+            const a = card.querySelector('a');
+            if(a) {
+                a.textContent = a.getAttribute('data-lang-es');
+                a.href = a.getAttribute('data-link-es');
             }
         });
     }
