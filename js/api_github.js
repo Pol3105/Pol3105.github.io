@@ -4,7 +4,7 @@ const url = `https://api.github.com/users/${username}/repos?sort=updated`;
 // --- DICCIONARIO DE TRADUCCIONES ---
 const traducciones = {
     'Data-Insight-Lab': 'Dashboard Financiero Interactivo construido con Python. Consume datos en tiempo real, realiza limpieza con Pandas y renderiza gráficos dinámicos.',
-    'university': 'Agrupación de todos mis proyectos universitarios. Código documentado mostrando habilidades en PHP, MySQL, APIs y desarrollo web.',
+    'University': 'Agrupación de todos mis proyectos universitarios. Código documentado mostrando habilidades en PHP, MySQL, APIs y desarrollo web.',
     'Pol3105.github.io': 'Código fuente de mi portfolio personal. Web estática alojada en GitHub Pages usando HTML, CSS y JavaScript vainilla.'
 };
 
