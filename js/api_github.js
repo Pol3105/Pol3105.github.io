@@ -2,7 +2,6 @@ const username = 'pol3105';
 const url = `https://api.github.com/users/${username}/repos?sort=updated`;
 
 // --- DICCIONARIO DE TRADUCCIONES ---
-// Asegúrate de que las claves (izquierda) sean IDÉNTICAS al nombre del repo
 const traducciones = {
     'Data-Insight-Lab': 'Dashboard Financiero Interactivo construido con Python. Consume datos en tiempo real, realiza limpieza con Pandas y renderiza gráficos dinámicos.',
     'university': 'Agrupación de todos mis proyectos universitarios. Código documentado mostrando habilidades en PHP, MySQL, APIs y desarrollo web.',
@@ -29,25 +28,38 @@ async function cargarRepositorios() {
 
         reposFiltrados.forEach(repo => {
             
-            // Estilos Badge
-            const lenguaje = repo.language || 'Code';
+            // --- LÓGICA DEL BADGE (LENGUAJE) ---
+            let lenguaje = repo.language;
+
+            // Truco visual: Si es el repo de la uni, forzamos que diga 'PHP' para que se vea bonito
+            if (repo.name === 'university') {
+                lenguaje = 'PHP'; 
+            } else if (!lenguaje) {
+                // Si GitHub no devuelve nada, ponemos 'Code'
+                lenguaje = 'Code';
+            }
+
+            // Generamos la URL del badge
             const lenguajeColor = encodeURIComponent(lenguaje);
+            // Nota: logo=${lenguaje.toLowerCase()} intenta buscar el logo oficial. Si no existe, sale solo texto.
             const badgeUrl = `https://img.shields.io/badge/${lenguajeColor}-222?style=flat&logo=${lenguaje.toLowerCase()}&logoColor=white`;
 
-            // --- LÓGICA DE TEXTOS CORREGIDA ---
-            // 1. Definimos la descripción en Inglés (Si es null, ponemos texto genérico)
+
+            // --- LÓGICA DE TEXTOS ---
+            // 1. Descripción en Inglés (control de nulls)
             let descEN = repo.description;
             if (!descEN) {
                 descEN = "Project without description";
             }
 
-            // 2. Definimos la descripción en Español
-            // Prioridad: 1º Diccionario, 2º Descripción de GitHub, 3º Texto genérico
+            // 2. Descripción en Español (Diccionario -> GitHub -> Genérico)
             const descES = traducciones[repo.name] || repo.description || "Proyecto sin descripción";
+
 
             // --- URLS ---
             const urlEn = repo.html_url; 
             const urlEs = `${repo.html_url}/blob/main/README_ES.md`;
+
 
             // --- PLANTILLA HTML ---
             const tarjeta = `
@@ -82,8 +94,7 @@ async function cargarRepositorios() {
             contenedor.innerHTML += tarjeta;
         });
 
-        // IMPORTANTE: Forzamos la actualización de idioma INMEDIATAMENTE después de pintar
-        // Esto arregla que se vean en inglés aunque estés en modo español
+        // Sincronización inmediata de idioma (útil si ya estabas en modo ES al recargar)
         setTimeout(verificarIdiomaActual, 50);
 
     } catch (error) {
@@ -94,22 +105,18 @@ async function cargarRepositorios() {
 function verificarIdiomaActual() {
     const botonIdioma = document.getElementById('lang-switch');
     
-    // Si el botón existe y dice "EN", significa que la web está visualmente en ESPAÑOL
+    // Si el botón dice "EN", es que estamos viendo la web en Español
     if (botonIdioma && botonIdioma.textContent.includes('EN')) {
-        console.log("🔄 Detectado modo Español: Traduciendo tarjetas dinámicas...");
+        console.log("🔄 Aplicando traducción inicial...");
         
         const tarjetas = document.querySelectorAll('#proyectos-container .project-card');
         
         tarjetas.forEach(card => {
-            // Traducir título (por si acaso)
-            const h3 = card.querySelector('h3');
-            if(h3) h3.textContent = h3.getAttribute('data-lang-es');
-
-            // Traducir descripción
+            // Descripción
             const p = card.querySelector('p');
             if(p) p.textContent = p.getAttribute('data-lang-es');
 
-            // Traducir botón
+            // Enlace
             const a = card.querySelector('.repo-link');
             if(a) {
                 a.textContent = a.getAttribute('data-lang-es');
