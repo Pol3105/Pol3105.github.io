@@ -6,8 +6,26 @@
   <title>Portfolio - Pablo</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Simple styles for language switch */
+    #lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
+
+  <div id="github-status" class="status-widget">
+      <span class="status-pulse"></span>
+      <span id="status-text">Conectando con Pol...</span>
+  </div>
 
   <!-- Language Switch -->
   <button id="lang-switch">ES</button>
@@ -150,8 +168,7 @@
   </footer>
 
   <script src="js/idiomas.js"></script>
-  <script src="js/api_github.js"></script> 
-  <script src="js/github_activity.js"></script> 
+  <script src="js/api_github.js"></script>  
 
 </body>
 </html>
