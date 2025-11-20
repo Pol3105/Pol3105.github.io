@@ -6,29 +6,31 @@ async function cargarRepositorios() {
         const respuesta = await fetch(url);
         if (!respuesta.ok) throw new Error(`Error: ${respuesta.status}`);
         
-        const datos = await respuesta.json();
+        const datosBrutos = await respuesta.json();
 
         // --- LISTA NEGRA (Repositorios a ocultar) ---
-        // Aquí he puesto exactamente los que me has dicho que NO quieres
         const reposOcultos = [
-            'Pol3105',        // Tu repo de perfil (README especial)
-            'PW_pe2',         // Uni (Práctica suelta)
-            'GuardianVision', // Uni (Tienda cámaras)
-            'Courtly'         // Uni (App ISI)
+            'Pol3105',        // Tu repo de perfil
+            'PW_pe2',         // Uni
+            'GuardianVision', // Uni
+            'Courtly'         // Uni
         ];
 
+        // --- FILTRADO DE DATOS (Lo hacemos ANTES de pintar) ---
+        // Creamos una nueva lista solo con los que NO están en la lista negra
+        const reposFiltrados = datosBrutos.filter(repo => !reposOcultos.includes(repo.name));
+
+        // PRUEBA: Ahora la consola mostrará solo los 3 que queremos
+        console.log("✅ Lista oficial filtrada (Solo deben salir 3):");
+        console.table(reposFiltrados.map(r => ({ Nombre: r.name, Lenguaje: r.language }))); 
+
+        // --- RENDERIZADO (Pintar en el HTML) ---
         const contenedor = document.getElementById('proyectos-container');
-        contenedor.innerHTML = ''; // Limpiamos antes de pintar
+        contenedor.innerHTML = ''; 
 
-        datos.forEach(repo => {
-            // 1. FILTRO: Si el nombre está en la lista negra, lo saltamos
-            if (reposOcultos.includes(repo.name)) {
-                return; 
-            }
-
-            // --- Renderizado de los que SÍ queremos ---
-
-            // Cálculo de fechas para el punto verde (7 días)
+        reposFiltrados.forEach(repo => {
+            
+            // Lógica del punto verde (7 días)
             const fechaActualizacion = new Date(repo.updated_at);
             const haceUnaSemana = new Date();
             haceUnaSemana.setDate(haceUnaSemana.getDate() - 7);
@@ -37,7 +39,6 @@ async function cargarRepositorios() {
                 ? '<span style="color: #2ecc71; font-size: 0.8em; margin-left: 5px;" title="Actualizado esta semana">🟢 Reciente</span>' 
                 : '';
 
-            // Creamos la tarjeta HTML
             const tarjeta = `
                 <div class="project-card" style="border: 1px solid #ddd; padding: 15px; margin: 10px; border-radius: 8px; background-color: #fff;">
                     <h3>
