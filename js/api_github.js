@@ -8,55 +8,63 @@ async function cargarRepositorios() {
         
         const datosBrutos = await respuesta.json();
 
-        // --- LISTA NEGRA (Repositorios a ocultar) ---
-        const reposOcultos = [
-            'Pol3105',        // Tu repo de perfil
-            'PW_pe2',         // Uni
-            'GuardianVision', // Uni
-            'Courtly'         // Uni
-        ];
+        // 1. LISTA NEGRA (Ocultar los que no queremos)
+        const reposOcultos = ['Pol3105', 'PW_pe2', 'GuardianVision', 'Courtly'];
 
-        // --- FILTRADO DE DATOS (Lo hacemos ANTES de pintar) ---
-        // Creamos una nueva lista solo con los que NO están en la lista negra
+        // 2. FILTRADO
         const reposFiltrados = datosBrutos.filter(repo => !reposOcultos.includes(repo.name));
+        
+        console.log("✅ Cargando proyectos con diseño original...");
 
-        // PRUEBA: Ahora la consola mostrará solo los 3 que queremos
-        console.log("✅ Lista oficial filtrada (Solo deben salir 3):");
-        console.table(reposFiltrados.map(r => ({ Nombre: r.name, Lenguaje: r.language }))); 
-
-        // --- RENDERIZADO (Pintar en el HTML) ---
+        // 3. RENDERIZADO
         const contenedor = document.getElementById('proyectos-container');
-        contenedor.innerHTML = ''; 
+        
+        if (!contenedor) {
+            console.error("❌ ERROR: No encuentro <div id='proyectos-container'> en el HTML");
+            return;
+        }
+
+        contenedor.innerHTML = ''; // Limpiar
 
         reposFiltrados.forEach(repo => {
             
-            // Lógica del punto verde (7 días)
-            const fechaActualizacion = new Date(repo.updated_at);
-            const haceUnaSemana = new Date();
-            haceUnaSemana.setDate(haceUnaSemana.getDate() - 7);
+            // Detectar lenguaje para el Badge (Insignia)
+            const lenguaje = repo.language || 'Code';
+            const lenguajeColor = encodeURIComponent(lenguaje); // Para que funcione en la URL
             
-            const actividadReciente = fechaActualizacion > haceUnaSemana 
-                ? '<span style="color: #2ecc71; font-size: 0.8em; margin-left: 5px;" title="Actualizado esta semana">🟢 Reciente</span>' 
-                : '';
+            // Generamos la URL del badge estilo shields.io dinámicamente
+            const badgeUrl = `https://img.shields.io/badge/${lenguajeColor}-222?style=flat&logo=${lenguaje.toLowerCase()}&logoColor=white`;
 
+            // Descripción (Si no hay, ponemos un texto genérico)
+            const descripcion = repo.description || "Project without description";
+
+            // PLANTILLA EXACTA A TU DISEÑO ORIGINAL
+            // Usamos tus clases: project-card, data-lang, etc.
+            // Nota: Como la API viene en inglés, ponemos la misma descripción en ES y EN por ahora.
             const tarjeta = `
-                <div class="project-card" style="border: 1px solid #ddd; padding: 15px; margin: 10px; border-radius: 8px; background-color: #fff;">
-                    <h3>
-                        <a href="${repo.html_url}" target="_blank" style="text-decoration: none; color: #000; font-weight: bold;">
-                            ${repo.name}
-                        </a>
-                    </h3>
-                    <p style="font-size: 0.9em; color: #666;">${repo.description || "Sin descripción"}</p>
-                    
-                    <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85em;">
-                        <span style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">💻 ${repo.language || "Varios"}</span>
-                        <span>⭐ ${repo.stargazers_count}</span>
-                    </div>
-                    
-                    <div style="margin-top: 10px; font-size: 0.75em; color: #888; border-top: 1px solid #eee; padding-top: 5px;">
-                        📅 Actualizado: ${new Date(repo.updated_at).toLocaleDateString('es-ES')}
-                        ${actividadReciente}
-                    </div>
+                <div class="project-card">
+                  <h3 data-lang-en="${repo.name}" data-lang-es="${repo.name}">
+                    ${repo.name}
+                  </h3>
+                  
+                  <div style="margin: 10px 0;">
+                    <img src="${badgeUrl}" alt="${lenguaje}">
+                    <img src="https://img.shields.io/badge/Stars-${repo.stargazers_count}-yellow?style=flat&logo=github" alt="Stars">
+                  </div>
+
+                  <p data-lang-en="${descripcion}"
+                     data-lang-es="${descripcion}">
+                     ${descripcion}
+                  </p>
+                  
+                  <a href="${repo.html_url}"
+                     target="_blank"
+                     data-lang-en="View Repository"
+                     data-lang-es="Ver Repositorio"
+                     data-link-en="${repo.html_url}"
+                     data-link-es="${repo.html_url}">
+                     View Repository
+                  </a>
                 </div>
             `;
 
