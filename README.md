@@ -10,9 +10,10 @@ This is a static website hosted on GitHub Pages, but it includes dynamic feature
 
 ### Key Features
 
+* **🟢 Real-Time Status Widget (New!):** Displays the exact message and time of my most recent commit from GitHub Events API, proving active development.
 * **⚡ Dynamic Project Fetching:** Uses the GitHub REST API to automatically retrieve my public repositories.
 * **🧹 Smart Filtering:** A JavaScript engine filters out minor sub-repositories (like specific university assignments) and groups them logically.
-* **🟢 Activity Tracker:** Visual indicators show which projects have been updated in the last 7 days.
+* **📅 Activity Tracker:** Visual indicators show which projects have been updated in the last 7 days.
 * **🌍 Internationalization (i18n):** Full support for English and Spanish (EN/ES) with a custom vanilla JS switcher.
 * **📱 Responsive Design:** Fully adaptable layout for desktop and mobile devices.
 
@@ -20,18 +21,23 @@ This is a static website hosted on GitHub Pages, but it includes dynamic feature
 
 * **Core:** HTML5, CSS3.
 * **Scripting:** Vanilla JavaScript (ES6+) - No heavy frameworks, just pure logic.
-* **Data Source:** GitHub REST API (Users & Repos endpoints).
+* **Data Source:** GitHub REST API (Users, Repos, **Events** endpoints).
 * **Icons:** FontAwesome & Shields.io dynamic badges.
 
 ## 📂 How it Works
 
-The core logic resides in `js/api_github.js`. Here is the flow:
+The project logic is split between two files (`js/api_github.js` for projects and `js/github_activity.js` for the widget). Here is the consolidated flow:
+
+### Project Rendering Logic
 
 1.  **Fetch:** The site requests my repository list sorted by update date.
 2.  **Filter:** It applies a "blacklist" to exclude specific sub-repos or configuration files.
-3.  **Enrich:** It generates dynamic badges based on the repository's main language.
-4.  **Translate:** It maps repository names to a custom dictionary for Spanish descriptions.
-5.  **Render:** Finally, it injects the clean HTML cards into the DOM.
+3.  **Enrich:** It generates dynamic badges and maps repository names to a custom dictionary for Spanish descriptions.
+4.  **Render:** It injects the clean HTML cards into the DOM.
+
+### Real-Time Status Widget Logic
+
+The script checks the GitHub Events API for the latest `PushEvent` and dynamically updates the header with the commit time and repository name.
 
 ## 🚀 Local Development
 
