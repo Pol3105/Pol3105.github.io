@@ -1,6 +1,6 @@
 // js/github_activity.js
 
-const username = 'pol3105'; // Necesita su propia constante username
+// const username = 'pol3105'; // Necesita su propia constante username
 
 async function cargarUltimaActividad() {
     const statusText = document.getElementById('status-text');
