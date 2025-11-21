@@ -43,7 +43,7 @@ async function cargarUltimaActividad() {
             tiempoTexto = `hace ${diferenciaDias} días`;
         }
         
-        statusText.innerHTML = `👨‍💻 **Última Actividad:** ${tiempoTexto} hice push en **'${repoNombre}'**`;
+        statusText.innerHTML = `👨‍💻 Última Actividad: ${tiempoTexto} hice push en '${repoNombre}'`;
         
         // Activar el estilo de latido
         statusPulse.classList.add('status-active');
