@@ -5,7 +5,8 @@ const url = `https://api.github.com/users/${username}/repos?sort=updated`;
 const traducciones = {
     'Data-Insight-Lab': 'Dashboard Financiero Interactivo construido con Python. Consume datos en tiempo real, realiza limpieza con Pandas y renderiza gráficos dinámicos.',
     'University': 'Agrupación de todos mis proyectos universitarios. Código documentado mostrando habilidades en PHP, MySQL, APIs y desarrollo web.',
-    'Pol3105.github.io': 'Código fuente de mi portfolio personal. Web estática alojada en GitHub Pages usando HTML, CSS y JavaScript vainilla.'
+    'Pol3105.github.io': 'Código fuente de mi portfolio personal. Web estática alojada en GitHub Pages usando HTML, CSS y JavaScript vainilla.',
+    'ResuMe' : 'ResuMe es una plataforma web impulsada por IA que genera resúmenes concisos y temáticos de reseñas de negocios locales utilizando PHP y la API de Hugging Face.'
 };
 
 async function cargarRepositorios() {
